@@ -106,7 +106,7 @@ namespace Common.MVVM
             {
                 _callback += value;
 
-                if (_value.IsSet)
+                if (IsSet)
                 {
                     value(Value);
                 }
@@ -115,6 +115,11 @@ namespace Common.MVVM
             {
                 _callback -= value;
             }
+        }
+
+        public bool IsSet
+        {
+            get => _value.IsSet;
         }
 
         public TOut Value
