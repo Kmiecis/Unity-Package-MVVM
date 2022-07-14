@@ -12,8 +12,8 @@ namespace Common.MVVM
 
     public class Binding<T> : IBinding
     {
-        protected readonly Action<T> _target;
-        protected readonly IDynamicValue<T> _value;
+        private readonly Action<T> _target;
+        private readonly IDynamicValue<T> _value;
 
         public Binding(Action<T> target, IDynamicValue<T> value)
         {

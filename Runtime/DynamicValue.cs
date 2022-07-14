@@ -18,17 +18,12 @@ namespace Common.MVVM
         {
             return new DynamicValue<TIn, TOut>(converter, value);
         }
-
-        public static DynamicValue<TIn, TOut> Create<TIn, TOut>(Func<TIn, TOut> converter)
-        {
-            return Create(converter, Create<TIn>());
-        }
     }
 
     public class DynamicValue<T> : IDynamicValue<T>
     {
-        protected T _value;
-        protected event Action<T> _callback;
+        private T _value;
+        private event Action<T> _callback;
 
         private bool _set;
 
@@ -91,6 +86,7 @@ namespace Common.MVVM
     public class DynamicValue<TIn, TOut> : IDynamicValue<TOut>
     {
         private readonly Func<TIn, TOut> _converter;
+
         private DynamicValue<TIn> _value;
         private event Action<TOut> _callback;
 
@@ -98,6 +94,13 @@ namespace Common.MVVM
         {
             _converter = converter;
             _value = value;
+
+            _value.OnChange += OnValueChanged;
+        }
+
+        ~DynamicValue()
+        {
+            _value.OnChange -= OnValueChanged;
         }
 
         public event Action<TOut> OnChange
@@ -124,7 +127,12 @@ namespace Common.MVVM
 
         public TOut Value
         {
-            get => _converter(_value);
+            get => _converter(_value.Value);
+        }
+
+        private void OnValueChanged(TIn value)
+        {
+            _callback?.Invoke(_converter(value));
         }
 
         public static implicit operator TOut(DynamicValue<TIn, TOut> value)
