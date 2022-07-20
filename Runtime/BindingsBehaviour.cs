@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Common.MVVM
 {
-    public class BindingsBehaviour : MonoBehaviour, IBinding
+    public class BindingsBehaviour : MonoBehaviour, IBindings, IBinding
     {
         protected readonly Bindings _bindings = new Bindings();
 
@@ -29,6 +29,16 @@ namespace Common.MVVM
         public void Detach()
         {
             _bindings.Detach();
+        }
+
+        protected virtual void OnEnable()
+        {
+            Attach();
+        }
+
+        protected virtual void OnDisable()
+        {
+            Detach();
         }
 
         protected virtual void OnDestroy()

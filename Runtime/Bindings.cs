@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Common.MVVM
 {
-    public class Bindings : IBinding, IDisposable
+    public class Bindings : IBindings, IBinding, IDisposable
     {
         protected readonly List<IBinding> _bindings = new List<IBinding>();
         protected bool _attached;
