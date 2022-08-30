@@ -22,10 +22,10 @@ namespace Common.MVVM
 
     public class DynamicValue<T> : IDynamicValue<T>
     {
-        private T _value;
-        private event Action<T> _callback;
+        protected T _value;
+        protected event Action<T> _callback;
 
-        private bool _set;
+        protected bool _set;
 
         public DynamicValue()
         {
@@ -64,12 +64,12 @@ namespace Common.MVVM
             set => SetValue(value);
         }
 
-        public T GetValue()
+        public virtual T GetValue()
         {
             return _value;
         }
 
-        public void SetValue(T value)
+        public virtual void SetValue(T value)
         {
             _callback?.Invoke(value);
 
@@ -85,28 +85,26 @@ namespace Common.MVVM
 
     public class DynamicValue<TIn, TOut> : IDynamicValue<TOut>
     {
-        private readonly Func<TIn, TOut> _converter;
+        protected readonly Func<TIn, TOut> _converter;
 
-        private DynamicValue<TIn> _value;
-        private event Action<TOut> _callback;
+        protected DynamicValue<TIn> _value;
+        protected event Action<TOut> _callback;
 
         public DynamicValue(Func<TIn, TOut> converter, DynamicValue<TIn> value)
         {
             _converter = converter;
             _value = value;
-
-            _value.OnChange += OnValueChanged;
-        }
-
-        ~DynamicValue()
-        {
-            _value.OnChange -= OnValueChanged;
         }
 
         public event Action<TOut> OnChange
         {
             add
             {
+                if (_callback == null)
+                {
+                    _value.OnChange += OnValueChanged;
+                }
+
                 _callback += value;
 
                 if (IsSet)
@@ -117,6 +115,11 @@ namespace Common.MVVM
             remove
             {
                 _callback -= value;
+
+                if (_callback == null)
+                {
+                    _value.OnChange -= OnValueChanged;
+                }
             }
         }
 
