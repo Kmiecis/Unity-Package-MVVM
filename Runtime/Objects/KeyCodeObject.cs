@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
-    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(KeyCodeObject), fileName = nameof(KeyCodeObject))]
+    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(KeyCodeObject), fileName = nameof(KeyCodeObject))]
     public class KeyCodeObject : DynamicObject<KeyCode>
     {
     }

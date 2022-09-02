@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
-    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(DoubleObject), fileName = nameof(DoubleObject))]
+    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(DoubleObject), fileName = nameof(DoubleObject))]
     public class DoubleObject : DynamicObject<double>
     {
     }

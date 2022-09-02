@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
-    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(StringObject), fileName = nameof(StringObject))]
+    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(StringObject), fileName = nameof(StringObject))]
     public class StringObject : DynamicObject<string>
     {
     }

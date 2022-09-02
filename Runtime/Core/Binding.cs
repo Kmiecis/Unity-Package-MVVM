@@ -1,6 +1,6 @@
 using System;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
     public static class Binding
     {

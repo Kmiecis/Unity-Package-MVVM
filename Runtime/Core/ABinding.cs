@@ -1,4 +1,4 @@
-namespace Common.MVVM
+namespace Common.MVB
 {
     public abstract class ABinding<TTarget, TValue> : IBinding
     {

@@ -1,14 +1,14 @@
 {
-  "name": "com.common.model.view.viewmodel",
-  "displayName": "Common Model-View-ViewModel",
+  "name": "com.common.model.view.behaviour",
+  "displayName": "Common Model-View-Behaviour",
   "author": {
     "name": "Slawomir Kmiecik",
     "email": "slawekkmiecik@gmail.com"
   },
-  "description": "Common model-view-viewmodel implementation",
+  "description": "Common Model-View-ViewModel implementation where Behaviours act as a ViewModel",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kmiecis/unity-package-mvvm"
+    "url": "https://github.com/kmiecis/unity-package-mvb"
   }
 }

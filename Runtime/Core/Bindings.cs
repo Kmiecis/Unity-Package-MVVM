@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
     public class Bindings : IBindings, IBinding, IDisposable
     {

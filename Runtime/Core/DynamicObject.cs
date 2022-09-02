@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
     public class DynamicObject<T> : ScriptableObject, IDynamicValue<T>
     {

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
-    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(ColorObject), fileName = nameof(ColorObject))]
+    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(ColorObject), fileName = nameof(ColorObject))]
     public class ColorObject : DynamicObject<Color>
     {
     }

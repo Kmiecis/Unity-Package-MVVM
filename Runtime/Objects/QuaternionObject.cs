@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
-    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(QuaternionObject), fileName = nameof(QuaternionObject))]
+    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(QuaternionObject), fileName = nameof(QuaternionObject))]
     public class QuaternionObject : DynamicObject<Quaternion>
     {
     }

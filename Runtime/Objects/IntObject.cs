@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
-    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(IntObject), fileName = nameof(IntObject))]
+    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(IntObject), fileName = nameof(IntObject))]
     public class IntObject : DynamicObject<int>
     {
     }

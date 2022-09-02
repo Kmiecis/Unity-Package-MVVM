@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
     public sealed class Vector2IntValue : DynamicValue<Vector2Int>
     {

@@ -1,4 +1,4 @@
-namespace Common.MVVM
+namespace Common.MVB
 {
     public interface IBinding
     {

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVVM
+namespace Common.MVB
 {
-    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(Vector4Object), fileName = nameof(Vector4Object))]
+    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(Vector4Object), fileName = nameof(Vector4Object))]
     public class Vector4Object : DynamicObject<Vector4>
     {
     }
