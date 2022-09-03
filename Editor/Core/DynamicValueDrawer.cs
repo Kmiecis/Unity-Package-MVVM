@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using Common.MVB;
 using UnityEditor;
 using UnityEngine;
@@ -28,10 +27,10 @@ namespace CommonEditor.MVB
                 position.height = EditorGUI.GetPropertyHeight(child);
 
                 var next = child.Copy();
-                next.Next(true);
+                var hasNext = next.Next(true);
 
                 EditorGUI.indentLevel = child.depth;
-                if (next.depth > child.depth)
+                if (hasNext && next.depth > child.depth)
                     EditorGUI.LabelField(position, child.displayName);
                 else
                     EditorGUI.PropertyField(position, child, new GUIContent(child.displayName));
@@ -65,4 +64,3 @@ namespace CommonEditor.MVB
         }
     }
 }
-#endif

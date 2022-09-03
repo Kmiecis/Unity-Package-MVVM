@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using Common.MVB;
 using UnityEditor;
 
@@ -31,4 +30,3 @@ namespace CommonEditor.MVB
         }
     }
 }
-#endif
