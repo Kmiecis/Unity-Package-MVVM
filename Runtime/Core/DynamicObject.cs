@@ -5,7 +5,7 @@ namespace Common.MVB
 {
     public class DynamicObject<T> : ScriptableObject, IDynamicValue<T>
     {
-        [SerializeReference]
+        [SerializeField]
         protected T _value;
         protected event Action<T> _callback;
 
@@ -13,17 +13,6 @@ namespace Common.MVB
         {
             get => GetValue();
             set => SetValue(value);
-        }
-
-        public virtual T GetValue()
-        {
-            return _value;
-        }
-
-        public virtual void SetValue(T value)
-        {
-            _callback?.Invoke(value);
-            _value = value;
         }
 
         public event Action<T> OnChange
@@ -37,6 +26,23 @@ namespace Common.MVB
             {
                 _callback -= value;
             }
+        }
+
+        public virtual T GetValue()
+        {
+            return _value;
+        }
+
+        public virtual void SetValue(T value)
+        {
+            _value = value;
+
+            Invoke();
+        }
+
+        public void Invoke()
+        {
+            _callback?.Invoke(_value);
         }
 
         public static implicit operator T(DynamicObject<T> value)

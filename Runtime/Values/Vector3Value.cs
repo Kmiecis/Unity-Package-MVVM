@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Common.MVB
 {
+    [Serializable]
     public sealed class Vector3Value : DynamicValue<Vector3>
     {
         public Vector3Value() :

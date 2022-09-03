@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Common.MVB
 {
@@ -20,8 +21,10 @@ namespace Common.MVB
         }
     }
 
+    [Serializable]
     public class DynamicValue<T> : IDynamicValue<T>
     {
+        [SerializeField]
         protected T _value;
         protected event Action<T> _callback;
 
@@ -71,10 +74,15 @@ namespace Common.MVB
 
         public virtual void SetValue(T value)
         {
-            _callback?.Invoke(value);
-
             _value = value;
             _set = true;
+
+            Invoke();
+        }
+
+        public void Invoke()
+        {
+            _callback?.Invoke(_value);
         }
 
         public static implicit operator T(DynamicValue<T> value)
@@ -130,12 +138,17 @@ namespace Common.MVB
 
         public TOut Value
         {
-            get => _converter(_value.Value);
+            get => _converter(_value);
         }
 
         private void OnValueChanged(TIn value)
         {
-            _callback?.Invoke(_converter(value));
+            _callback.Invoke(_converter(value));
+        }
+
+        public void Invoke()
+        {
+            _callback.Invoke(_converter(_value));
         }
 
         public static implicit operator TOut(DynamicValue<TIn, TOut> value)

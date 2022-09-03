@@ -1,0 +1,16 @@
+{
+    "name": "CommonEditor.MVB",
+    "rootNamespace": "CommonEditor.MVB",
+    "references": [
+        "GUID:8c92e501e810758428f9e00632c36efa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

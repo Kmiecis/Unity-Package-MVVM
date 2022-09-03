@@ -1,5 +1,8 @@
+using System;
+
 namespace Common.MVB
 {
+    [Serializable]
     public sealed class DoubleValue : DynamicValue<double>
     {
         public DoubleValue() :

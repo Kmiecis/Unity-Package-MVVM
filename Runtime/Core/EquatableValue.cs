@@ -36,6 +36,7 @@ namespace Common.MVB
         }
     }
 
+    [Serializable]
     public class EquatableValue<T> : DynamicValue<T>
     {
         protected Func<T, T, bool> _equals;
