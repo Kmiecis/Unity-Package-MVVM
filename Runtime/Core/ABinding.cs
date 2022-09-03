@@ -15,12 +15,12 @@ namespace Common.MVB
 
         public void Attach()
         {
-            _value.OnChange += OnValueChanged;
+            _value.AddListener(OnValueChanged);
         }
 
         public void Detach()
         {
-            _value.OnChange -= OnValueChanged;
+            _value.RemoveListener(OnValueChanged);
         }
     }
 }

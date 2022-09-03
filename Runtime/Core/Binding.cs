@@ -23,12 +23,12 @@ namespace Common.MVB
 
         public void Attach()
         {
-            _value.OnChange += _target;
+            _value.AddListener(_target);
         }
 
         public void Detach()
         {
-            _value.OnChange -= _target;
+            _value.RemoveListener(_target);
         }
     }
 }

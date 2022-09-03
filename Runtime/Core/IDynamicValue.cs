@@ -6,6 +6,10 @@ namespace Common.MVB
     {
         T Value { get; }
 
-        event Action<T> OnChange;
+        void AddListener(Action<T> callback);
+
+        void RemoveListener(Action<T> callback);
+
+        void RemoveAllListeners();
     }
 }

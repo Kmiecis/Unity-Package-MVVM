@@ -39,23 +39,6 @@ namespace Common.MVB
             SetValue(value);
         }
 
-        public event Action<T> OnChange
-        {
-            add
-            {
-                _callback += value;
-
-                if (_set)
-                {
-                    value(_value);
-                }
-            }
-            remove
-            {
-                _callback -= value;
-            }
-        }
-
         public bool IsSet
         {
             get => _set;
@@ -65,6 +48,26 @@ namespace Common.MVB
         {
             get => GetValue();
             set => SetValue(value);
+        }
+
+        public void AddListener(Action<T> callback)
+        {
+            _callback += callback;
+
+            if (_set)
+            {
+                callback(_value);
+            }
+        }
+
+        public void RemoveListener(Action<T> callback)
+        {
+            _callback -= callback;
+        }
+
+        public void RemoveAllListeners()
+        {
+            _callback = null;
         }
 
         public virtual T GetValue()
@@ -104,33 +107,6 @@ namespace Common.MVB
             _value = value;
         }
 
-        public event Action<TOut> OnChange
-        {
-            add
-            {
-                if (_callback == null)
-                {
-                    _value.OnChange += OnValueChanged;
-                }
-
-                _callback += value;
-
-                if (IsSet)
-                {
-                    value(Value);
-                }
-            }
-            remove
-            {
-                _callback -= value;
-
-                if (_callback == null)
-                {
-                    _value.OnChange -= OnValueChanged;
-                }
-            }
-        }
-
         public bool IsSet
         {
             get => _value.IsSet;
@@ -141,6 +117,37 @@ namespace Common.MVB
             get => _converter(_value);
         }
 
+        public void AddListener(Action<TOut> callback)
+        {
+            if (_callback == null)
+            {
+                _value.AddListener(OnValueChanged);
+            }
+
+            _callback += callback;
+
+            if (IsSet)
+            {
+                callback(Value);
+            }
+        }
+
+        public void RemoveListener(Action<TOut> callback)
+        {
+            _callback -= callback;
+
+            if (_callback == null)
+            {
+                _value.RemoveListener(OnValueChanged);
+            }
+        }
+
+        public void RemoveAllListeners()
+        {
+            _callback = null;
+            _value.RemoveListener(OnValueChanged);
+        }
+
         private void OnValueChanged(TIn value)
         {
             _callback.Invoke(_converter(value));
@@ -148,7 +155,7 @@ namespace Common.MVB
 
         public void Invoke()
         {
-            _callback.Invoke(_converter(_value));
+            _callback?.Invoke(_converter(_value));
         }
 
         public static implicit operator TOut(DynamicValue<TIn, TOut> value)

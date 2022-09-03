@@ -15,17 +15,20 @@ namespace Common.MVB
             set => SetValue(value);
         }
 
-        public event Action<T> OnChange
+        public void AddListener(Action<T> callback)
         {
-            add
-            {
-                _callback += value;
-                value(_value);
-            }
-            remove
-            {
-                _callback -= value;
-            }
+            _callback += callback;
+            callback(_value);
+        }
+
+        public void RemoveListener(Action<T> callback)
+        {
+            _callback -= callback;
+        }
+
+        public void RemoveAllListeners()
+        {
+            _callback = null;
         }
 
         public virtual T GetValue()
