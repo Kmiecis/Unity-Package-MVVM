@@ -19,9 +19,12 @@ namespace CommonEditor.MVB
             serializedObject.Update();
 
             EditorGUI.BeginChangeCheck();
+
             EditorGUILayout.PropertyField(_valueProperty);
+
             if (EditorGUI.EndChangeCheck())
             {
+                // Apply early, so we can Invoke with new values
                 serializedObject.ApplyModifiedProperties();
 
                 if (target is IInvokeable invokeable)
