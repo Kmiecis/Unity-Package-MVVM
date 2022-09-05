@@ -28,8 +28,6 @@ namespace Common.MVB
         protected T _value;
         protected event Action<T> _callback;
 
-        protected bool _set;
-
         public DynamicValue()
         {
         }
@@ -37,11 +35,6 @@ namespace Common.MVB
         public DynamicValue(T value)
         {
             SetValue(value);
-        }
-
-        public bool IsSet
-        {
-            get => _set;
         }
 
         public T Value
@@ -53,11 +46,6 @@ namespace Common.MVB
         public void AddListener(Action<T> callback)
         {
             _callback += callback;
-
-            if (_set)
-            {
-                callback(_value);
-            }
         }
 
         public void RemoveListener(Action<T> callback)
@@ -77,20 +65,47 @@ namespace Common.MVB
 
         public virtual void SetValue(T value)
         {
-            _value = value;
-            _set = true;
+            Invoke(value);
 
-            Invoke();
+            _value = value;
+        }
+
+        protected void Invoke(T value)
+        {
+            _callback?.Invoke(value);
         }
 
         public void Invoke()
         {
-            _callback?.Invoke(_value);
+            Invoke(_value);
         }
 
         public static implicit operator T(DynamicValue<T> value)
         {
             return value.Value;
+        }
+
+        private bool Equals(DynamicValue<T> other)
+        {
+            return (
+                other != null &&
+                (ReferenceEquals(this, other) || Equals(this.Value, other.Value))
+            );
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as DynamicValue<T>);
+        }
+
+        public override int GetHashCode()
+        {
+            return _value.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return _value.ToString();
         }
     }
 
@@ -107,11 +122,6 @@ namespace Common.MVB
             _value = value;
         }
 
-        public bool IsSet
-        {
-            get => _value.IsSet;
-        }
-
         public TOut Value
         {
             get => _converter(_value);
@@ -125,11 +135,6 @@ namespace Common.MVB
             }
 
             _callback += callback;
-
-            if (IsSet)
-            {
-                callback(Value);
-            }
         }
 
         public void RemoveListener(Action<TOut> callback)
@@ -148,19 +153,34 @@ namespace Common.MVB
             _value.RemoveListener(OnValueChanged);
         }
 
-        private void OnValueChanged(TIn value)
+        protected void Invoke(TOut value)
         {
-            _callback.Invoke(_converter(value));
+            _callback?.Invoke(value);
+        }
+
+        protected void Invoke(TIn value)
+        {
+            Invoke(_converter(value));
         }
 
         public void Invoke()
         {
-            _callback?.Invoke(_converter(_value));
+            Invoke(_value);
+        }
+
+        protected void OnValueChanged(TIn value)
+        {
+            Invoke(value);
         }
 
         public static implicit operator TOut(DynamicValue<TIn, TOut> value)
         {
             return value.Value;
+        }
+
+        public override string ToString()
+        {
+            return _value.ToString();
         }
     }
 }

@@ -4,26 +4,27 @@ namespace Common.MVB
 {
     public static class Binding
     {
-        public static Binding<T> Create<T>(Action<T> target, IDynamicValue<T> value)
+        public static Binding<T> Create<T>(IDynamicValue<T> value, Action<T> target)
         {
-            return new Binding<T>(target, value);
+            return new Binding<T>(value, target);
         }
     }
 
     public class Binding<T> : IBinding
     {
-        private readonly Action<T> _target;
         private readonly IDynamicValue<T> _value;
+        private readonly Action<T> _target;
 
-        public Binding(Action<T> target, IDynamicValue<T> value)
+        public Binding(IDynamicValue<T> value, Action<T> target)
         {
-            _target = target;
             _value = value;
+            _target = target;
         }
 
         public void Attach()
         {
             _value.AddListener(_target);
+            _target(_value.Value);
         }
 
         public void Detach()

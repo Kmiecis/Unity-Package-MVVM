@@ -54,6 +54,15 @@ namespace Common.MVB
         public virtual void Setup(T context)
         {
             _context = context;
+            Attach();
+        }
+
+        protected override void OnEnable()
+        {
+            if (_context != null)
+            {
+                Attach();
+            }
         }
     }
 }

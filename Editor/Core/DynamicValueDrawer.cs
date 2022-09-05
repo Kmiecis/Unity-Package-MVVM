@@ -14,17 +14,14 @@ namespace CommonEditor.MVB
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginChangeCheck();
-
             EditorGUI.PropertyField(position, property, label, true);
 
-            if (EditorGUI.EndChangeCheck())
+            if (
+                property.serializedObject.ApplyModifiedProperties() &&
+                GetTarget(property) is IInvokeable invokeable
+            )
             {
-                // Apply early, so we can Invoke with new values
-                property.serializedObject.ApplyModifiedProperties();
-
-                if (GetTarget(property) is IInvokeable invokeable)
-                    invokeable.Invoke();
+                invokeable.Invoke();
             }
         }
 

@@ -18,7 +18,6 @@ namespace Common.MVB
         public void AddListener(Action<T> callback)
         {
             _callback += callback;
-            callback(_value);
         }
 
         public void RemoveListener(Action<T> callback)
@@ -38,19 +37,47 @@ namespace Common.MVB
 
         public virtual void SetValue(T value)
         {
-            _value = value;
+            Invoke(value);
 
-            Invoke();
+            _value = value;
+        }
+
+        protected void Invoke(T value)
+        {
+            _callback?.Invoke(value);
         }
 
         public void Invoke()
         {
-            _callback?.Invoke(_value);
+            Invoke(_value);
         }
 
         public static implicit operator T(DynamicObject<T> value)
         {
             return value.Value;
+        }
+
+        public bool Equals(DynamicObject<T> other)
+        {
+            return Equals(this.Value, other.Value);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return (
+                ReferenceEquals(this, obj) ||
+                (obj is DynamicObject<T> other && Equals(other))
+            );
+        }
+
+        public override int GetHashCode()
+        {
+            return _value.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return _value.ToString();
         }
     }
 }

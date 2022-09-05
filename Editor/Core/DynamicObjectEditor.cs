@@ -18,17 +18,14 @@ namespace CommonEditor.MVB
         {
             serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
-
             EditorGUILayout.PropertyField(_valueProperty);
 
-            if (EditorGUI.EndChangeCheck())
+            if (
+                serializedObject.ApplyModifiedProperties() &&
+                target is IInvokeable invokeable
+            )
             {
-                // Apply early, so we can Invoke with new values
-                serializedObject.ApplyModifiedProperties();
-
-                if (target is IInvokeable invokeable)
-                    invokeable.Invoke();
+                invokeable.Invoke();
             }
         }
     }

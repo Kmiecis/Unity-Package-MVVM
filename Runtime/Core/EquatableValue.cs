@@ -39,21 +39,17 @@ namespace Common.MVB
     [Serializable]
     public class EquatableValue<T> : DynamicValue<T>
     {
-        protected readonly Func<T, T, bool> _equals;
+        public readonly Func<T, T, bool> _equals;
 
-        public EquatableValue()
+        public EquatableValue(T value, Func<T, T, bool> equals) :
+            base(value)
         {
+            _equals = equals;
         }
 
         public EquatableValue(T value) :
-            base(value)
+            this(value, EqualityComparer<T>.Default.Equals)
         {
-        }
-
-        public EquatableValue(T value, Func<T, T, bool> equals) :
-            this(value)
-        {
-            _equals = equals;
         }
 
         public EquatableValue(Func<T, T, bool> equals)
@@ -61,22 +57,40 @@ namespace Common.MVB
             _equals = equals;
         }
 
+        public EquatableValue() :
+            this(EqualityComparer<T>.Default.Equals)
+        {
+        }
+
         public override void SetValue(T value)
         {
-            if (_equals != null)
+            if (!_equals(_value, value))
             {
-                if (!_equals(_value, value))
-                {
-                    base.SetValue(value);
-                }
+                base.SetValue(value);
             }
-            else
-            {
-                if (!Equals(_value, value))
-                {
-                    base.SetValue(value);
-                }
-            }
+        }
+
+        private bool Equals(EquatableValue<T> other)
+        {
+            return (
+                other != null &&
+                (
+                    ReferenceEquals(this, other) ||
+                    this._equals == other._equals ?
+                        this._equals(this.Value, other.Value) :
+                        this._equals(this.Value, other.Value) && other._equals(other.Value, this.Value)
+                )
+            );
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as EquatableValue<T>);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }
