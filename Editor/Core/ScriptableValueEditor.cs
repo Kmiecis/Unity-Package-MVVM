@@ -4,8 +4,8 @@ using UnityEditor;
 namespace CommonEditor.MVB
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(DynamicObject<>), true)]
-    public class DynamicObjectEditor : Editor
+    [CustomEditor(typeof(ScriptableValue<>), true)]
+    public class ScriptableValueEditor : Editor
     {
         private SerializedProperty _valueProperty;
 

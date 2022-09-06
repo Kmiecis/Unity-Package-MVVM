@@ -3,7 +3,22 @@ using UnityEngine;
 
 namespace Common.MVB
 {
-    public class DynamicObject<T> : ScriptableObject, IDynamicValue<T>
+    public static class ScriptableValue
+    {
+        public static ScriptableValue<T> Create<T>()
+        {
+            return ScriptableObject.CreateInstance<ScriptableValue<T>>();
+        }
+
+        public static ScriptableValue<T> Create<T>(T value)
+        {
+            var result = Create<T>();
+            result.SetValue(value);
+            return result;
+        }
+    }
+
+    public class ScriptableValue<T> : ScriptableObject, IDynamicValue<T>
     {
         [SerializeField]
         protected T _value;
@@ -52,12 +67,12 @@ namespace Common.MVB
             Invoke(_value);
         }
 
-        public static implicit operator T(DynamicObject<T> value)
+        public static implicit operator T(ScriptableValue<T> value)
         {
             return value.Value;
         }
 
-        public bool Equals(DynamicObject<T> other)
+        public bool Equals(ScriptableValue<T> other)
         {
             return Equals(this.Value, other.Value);
         }
@@ -66,7 +81,7 @@ namespace Common.MVB
         {
             return (
                 ReferenceEquals(this, obj) ||
-                (obj is DynamicObject<T> other && Equals(other))
+                (obj is ScriptableValue<T> other && Equals(other))
             );
         }
 

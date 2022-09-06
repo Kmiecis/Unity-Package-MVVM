@@ -124,7 +124,7 @@ namespace Common.MVB
 
         public TOut Value
         {
-            get => _converter(_value);
+            get => GetValue();
         }
 
         public void AddListener(Action<TOut> callback)
@@ -153,6 +153,11 @@ namespace Common.MVB
             _value.RemoveListener(OnValueChanged);
         }
 
+        public virtual TOut GetValue()
+        {
+            return _converter(_value);
+        }
+
         protected void Invoke(TOut value)
         {
             _callback?.Invoke(value);
@@ -176,6 +181,24 @@ namespace Common.MVB
         public static implicit operator TOut(DynamicValue<TIn, TOut> value)
         {
             return value.Value;
+        }
+
+        private bool Equals(DynamicValue<TIn, TOut> other)
+        {
+            return (
+                other != null &&
+                (ReferenceEquals(this, other) || Equals(this.Value, other.Value))
+            );
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as DynamicValue<TIn, TOut>);
+        }
+
+        public override int GetHashCode()
+        {
+            return _value.GetHashCode();
         }
 
         public override string ToString()
