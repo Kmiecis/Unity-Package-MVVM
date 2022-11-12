@@ -7,7 +7,7 @@ namespace CommonEditor.MVB
     [CustomPropertyDrawer(typeof(DynamicValue<>))]
     public class DynamicValueDrawer : PropertyDrawer
     {
-        private object GetTarget(SerializedProperty property)
+        private object GetValue(SerializedProperty property)
         {
             return fieldInfo.GetValue(property.serializedObject.targetObject);
         }
@@ -18,7 +18,7 @@ namespace CommonEditor.MVB
 
             if (
                 property.serializedObject.ApplyModifiedProperties() &&
-                GetTarget(property) is IInvokeable invokeable
+                GetValue(property) is IInvokeable invokeable
             )
             {
                 invokeable.Invoke();
