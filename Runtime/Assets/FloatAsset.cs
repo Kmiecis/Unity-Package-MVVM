@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
-    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(FloatAsset), fileName = nameof(FloatAsset))]
+    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(FloatAsset), fileName = nameof(FloatAsset))]
     public sealed class FloatAsset : ScriptableValue<float>
     {
     }

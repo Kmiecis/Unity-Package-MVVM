@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
     public static class ScriptableValue
     {

@@ -1,7 +1,7 @@
-using Common.MVB;
+using Common.MVVM;
 using UnityEditor;
 
-namespace CommonEditor.MVB
+namespace CommonEditor.MVVM
 {
     [CustomPropertyDrawer(typeof(EquatableValue<>))]
     public class EquatableValueDrawer : DynamicValueDrawer

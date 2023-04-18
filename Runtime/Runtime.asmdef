@@ -1,6 +1,6 @@
 {
-    "name": "Common.MVB",
-    "rootNamespace": "Common.MVB",
+    "name": "Common.MVVM",
+    "rootNamespace": "Common.MVVM",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

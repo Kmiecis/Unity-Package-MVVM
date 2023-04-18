@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
-    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(ColorAsset), fileName = nameof(ColorAsset))]
+    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(ColorAsset), fileName = nameof(ColorAsset))]
     public sealed class ColorAsset : ScriptableValue<Color>
     {
         public ColorAsset()

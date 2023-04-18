@@ -1,6 +1,6 @@
 using System;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
     public interface IDynamicValue<T> : IInvokeable
     {

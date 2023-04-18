@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
     public class BindingsBehaviour : MonoBehaviour, IBindings, IBinding
     {

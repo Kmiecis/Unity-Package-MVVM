@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
-    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(Vector2Asset), fileName = nameof(Vector2Asset))]
+    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(Vector2Asset), fileName = nameof(Vector2Asset))]
     public sealed class Vector2Asset : ScriptableValue<Vector2>
     {
     }

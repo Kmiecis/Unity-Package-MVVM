@@ -1,8 +1,8 @@
-using Common.MVB;
+using Common.MVVM;
 using UnityEditor;
 using UnityEngine;
 
-namespace CommonEditor.MVB
+namespace CommonEditor.MVVM
 {
     [CustomPropertyDrawer(typeof(DynamicValue<>))]
     public class DynamicValueDrawer : PropertyDrawer

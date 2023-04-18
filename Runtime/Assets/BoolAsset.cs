@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
-    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(BoolAsset), fileName = nameof(BoolAsset))]
+    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(BoolAsset), fileName = nameof(BoolAsset))]
     public sealed class BoolAsset : ScriptableValue<bool>
     {
     }

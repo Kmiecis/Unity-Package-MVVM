@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
-    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(KeyCodeAsset), fileName = nameof(KeyCodeAsset))]
+    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(KeyCodeAsset), fileName = nameof(KeyCodeAsset))]
     public sealed class KeyCodeAsset : ScriptableValue<KeyCode>
     {
     }

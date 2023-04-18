@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
-    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(QuaternionAsset), fileName = nameof(QuaternionAsset))]
+    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(QuaternionAsset), fileName = nameof(QuaternionAsset))]
     public sealed class QuaternionAsset : ScriptableValue<Quaternion>
     {
         public QuaternionAsset()

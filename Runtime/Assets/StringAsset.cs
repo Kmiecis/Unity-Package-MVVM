@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Common.MVB
+namespace Common.MVVM
 {
-    [CreateAssetMenu(menuName = nameof(MVB) + "/" + nameof(StringAsset), fileName = nameof(StringAsset))]
+    [CreateAssetMenu(menuName = nameof(MVVM) + "/" + nameof(StringAsset), fileName = nameof(StringAsset))]
     public sealed class StringAsset : ScriptableValue<string>
     {
         public StringAsset()
