@@ -3,34 +3,26 @@ using UnityEngine;
 
 namespace Common.MVVM
 {
-    public static class DynamicValue
+    public static class ScriptableValue
     {
-        public static DynamicValue<T> Create<T>()
+        public static ScriptableValue<T> Create<T>()
         {
-            return new DynamicValue<T>();
+            return ScriptableObject.CreateInstance<ScriptableValue<T>>();
         }
 
-        public static DynamicValue<T> Create<T>(T value)
+        public static ScriptableValue<T> Create<T>(T value)
         {
-            return new DynamicValue<T>(value);
+            var result = Create<T>();
+            result.SetValue(value);
+            return result;
         }
     }
 
-    [Serializable]
-    public class DynamicValue<T> : IDynamicValue<T>
+    public class ScriptableValue<T> : ScriptableObject, IDynamicValue<T>
     {
         [SerializeField]
         protected T _value;
         protected event Action<T> _callback;
-
-        public DynamicValue()
-        {
-        }
-
-        public DynamicValue(T value)
-        {
-            SetValue(value);
-        }
 
         public T Value
         {
@@ -75,22 +67,27 @@ namespace Common.MVVM
             Invoke(_value);
         }
 
-        public static implicit operator T(DynamicValue<T> value)
+        public static implicit operator T(ScriptableValue<T> value)
         {
             return value.Value;
         }
 
-        private bool Equals(DynamicValue<T> other)
+        public static explicit operator ScriptableValue<T>(T value)
         {
-            return (
-                other != null &&
-                (ReferenceEquals(this, other) || Equals(this.Value, other.Value))
-            );
+            return ScriptableValue.Create(value);
+        }
+
+        public bool Equals(ScriptableValue<T> other)
+        {
+            return Equals(this.Value, other.Value);
         }
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as DynamicValue<T>);
+            return (
+                ReferenceEquals(this, obj) ||
+                (obj is ScriptableValue<T> other && Equals(other))
+            );
         }
 
         public override int GetHashCode()

@@ -3,26 +3,34 @@ using UnityEngine;
 
 namespace Common.MVVM
 {
-    public static class ScriptableValue
+    public static class DynamicValue
     {
-        public static ScriptableValue<T> Create<T>()
+        public static DynamicValue<T> Create<T>()
         {
-            return ScriptableObject.CreateInstance<ScriptableValue<T>>();
+            return new DynamicValue<T>();
         }
 
-        public static ScriptableValue<T> Create<T>(T value)
+        public static DynamicValue<T> Create<T>(T value)
         {
-            var result = Create<T>();
-            result.SetValue(value);
-            return result;
+            return new DynamicValue<T>(value);
         }
     }
 
-    public class ScriptableValue<T> : ScriptableObject, IDynamicValue<T>
+    [Serializable]
+    public class DynamicValue<T> : IDynamicValue<T>
     {
         [SerializeField]
         protected T _value;
         protected event Action<T> _callback;
+
+        public DynamicValue()
+        {
+        }
+
+        public DynamicValue(T value)
+        {
+            SetValue(value);
+        }
 
         public T Value
         {
@@ -67,22 +75,27 @@ namespace Common.MVVM
             Invoke(_value);
         }
 
-        public static implicit operator T(ScriptableValue<T> value)
+        public static implicit operator T(DynamicValue<T> value)
         {
             return value.Value;
         }
 
-        public bool Equals(ScriptableValue<T> other)
+        public static explicit operator DynamicValue<T>(T value)
         {
-            return Equals(this.Value, other.Value);
+            return DynamicValue.Create(value);
+        }
+
+        private bool Equals(DynamicValue<T> other)
+        {
+            return (
+                other != null &&
+                (ReferenceEquals(this, other) || Equals(this.Value, other.Value))
+            );
         }
 
         public override bool Equals(object obj)
         {
-            return (
-                ReferenceEquals(this, obj) ||
-                (obj is ScriptableValue<T> other && Equals(other))
-            );
+            return Equals(obj as DynamicValue<T>);
         }
 
         public override int GetHashCode()
