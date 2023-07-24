@@ -2,7 +2,7 @@
   "name": "com.common.model.view.viewmodel",
   "displayName": "Common Model-View-ViewModel",
   "author": {
-    "name": "Slawomir Kmiecik",
+    "name": "Kmiecis",
     "email": "slawekkmiecik@gmail.com"
   },
   "description": "Common Model-View-ViewModel implementation where Behaviours act as a View",
