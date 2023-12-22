@@ -1,14 +1,14 @@
 {
-  "name": "com.common.model.view.viewmodel",
-  "displayName": "Common Model-View-ViewModel",
+  "name": "com.kmiecis.model.view.viewmodel",
+  "displayName": "Model-View-ViewModel",
   "author": {
     "name": "Kmiecis",
     "email": "slawekkmiecik@gmail.com"
   },
-  "description": "Common Model-View-ViewModel implementation where Behaviours act as a View",
+  "description": "Scripts library of Model-View-ViewModel implementation where Behaviours act as a View",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kmiecis/unity-package-mvvm"
+    "url": "https://github.com/Kmiecis/Unity-Package-MVVM.git"
   }
 }

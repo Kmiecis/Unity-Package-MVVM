@@ -7,7 +7,7 @@ A simple and lightweight Model-View-ViewModel implementation where Behaviours ac
 ## Installation
 
 Add the package via Package Manager by adding it from git URL:  
-`https://github.com/kmiecis/unity-package-mvvm.git`  
+`https://github.com/Kmiecis/Unity-Package-MVVM.git`  
 Package Manager can be found inside the Unity Editor in the Window tab
 
 OR
