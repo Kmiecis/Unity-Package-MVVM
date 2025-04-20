@@ -19,8 +19,8 @@ namespace Common.MVVM
     [Serializable]
     public class DynamicValue<T> : IDynamicValue<T>
     {
-        [SerializeField]
-        protected T _value;
+        [SerializeField] protected T _value;
+
         protected event Action<T> _callback;
 
         public DynamicValue()
@@ -75,6 +75,11 @@ namespace Common.MVVM
             Invoke(_value);
         }
 
+        private bool Equals(DynamicValue<T> other)
+        {
+            return Equals(this.Value, other.Value);
+        }
+
         public static implicit operator T(DynamicValue<T> value)
         {
             return value.Value;
@@ -85,17 +90,18 @@ namespace Common.MVVM
             return DynamicValue.Create(value);
         }
 
-        private bool Equals(DynamicValue<T> other)
-        {
-            return (
-                other != null &&
-                (ReferenceEquals(this, other) || Equals(this.Value, other.Value))
-            );
-        }
-
         public override bool Equals(object obj)
         {
-            return Equals(obj as DynamicValue<T>);
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            if (ReferenceEquals(obj, null))
+                return false;
+
+            if (this.GetType() != obj.GetType())
+                return false;
+
+            return Equals((DynamicValue<T>)obj);
         }
 
         public override int GetHashCode()

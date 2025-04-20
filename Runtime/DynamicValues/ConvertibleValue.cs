@@ -2,22 +2,22 @@ using System;
 
 namespace Common.MVVM
 {
-    public static class ConvertedValue
+    public static class ConvertibleValue
     {
-        public static ConvertedValue<TIn, TOut> Create<TIn, TOut>(Func<TIn, TOut> converter, IDynamicValue<TIn> value)
+        public static ConvertibleValue<TIn, TOut> Create<TIn, TOut>(Func<TIn, TOut> converter, IDynamicValue<TIn> value)
         {
-            return new ConvertedValue<TIn, TOut>(converter, value);
+            return new ConvertibleValue<TIn, TOut>(converter, value);
         }
     }
 
-    public class ConvertedValue<TIn, TOut> : IDynamicValue<TOut>
+    public class ConvertibleValue<TIn, TOut> : IDynamicValue<TOut>
     {
-        protected readonly Func<TIn, TOut> _converter;
-        protected readonly IDynamicValue<TIn> _value;
+        protected Func<TIn, TOut> _converter;
+        protected IDynamicValue<TIn> _value;
 
         protected event Action<TOut> _callback;
 
-        public ConvertedValue(Func<TIn, TOut> converter, IDynamicValue<TIn> value)
+        public ConvertibleValue(Func<TIn, TOut> converter, IDynamicValue<TIn> value)
         {
             _converter = converter;
             _value = value;
@@ -51,6 +51,7 @@ namespace Common.MVVM
         public void RemoveAllListeners()
         {
             _callback = null;
+
             _value.RemoveListener(OnValueChanged);
         }
 
@@ -79,22 +80,28 @@ namespace Common.MVVM
             Invoke(value);
         }
 
-        public static implicit operator TOut(ConvertedValue<TIn, TOut> value)
+        private bool Equals(ConvertibleValue<TIn, TOut> other)
+        {
+            return Equals(this.Value, other.Value);
+        }
+
+        public static implicit operator TOut(ConvertibleValue<TIn, TOut> value)
         {
             return value.Value;
         }
 
-        private bool Equals(ConvertedValue<TIn, TOut> other)
-        {
-            return (
-                other != null &&
-                (ReferenceEquals(this, other) || Equals(this.Value, other.Value))
-            );
-        }
-
         public override bool Equals(object obj)
         {
-            return Equals(obj as ConvertedValue<TIn, TOut>);
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            if (ReferenceEquals(obj, null))
+                return false;
+
+            if (this.GetType() != obj.GetType())
+                return false;
+
+            return Equals((ConvertibleValue<TIn, TOut>)obj);
         }
 
         public override int GetHashCode()

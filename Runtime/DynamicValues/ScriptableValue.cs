@@ -18,16 +18,28 @@ namespace Common.MVVM
         }
     }
 
-    public class ScriptableValue<T> : ScriptableObject, IDynamicValue<T>
+    public class ScriptableValue<T> : ScriptableObject
     {
-        [SerializeField]
-        protected T _value;
+        [SerializeField] protected T _value;
+
         protected event Action<T> _callback;
 
         public T Value
         {
             get => GetValue();
             set => SetValue(value);
+        }
+
+        public virtual T GetValue()
+        {
+            return _value;
+        }
+
+        public virtual void SetValue(T value)
+        {
+            Invoke(value);
+
+            _value = value;
         }
 
         public void AddListener(Action<T> callback)
@@ -45,16 +57,9 @@ namespace Common.MVVM
             _callback = null;
         }
 
-        public virtual T GetValue()
+        public void Invoke()
         {
-            return _value;
-        }
-
-        public virtual void SetValue(T value)
-        {
-            Invoke(value);
-
-            _value = value;
+            Invoke(_value);
         }
 
         protected void Invoke(T value)
@@ -62,9 +67,9 @@ namespace Common.MVVM
             _callback?.Invoke(value);
         }
 
-        public void Invoke()
+        private bool Equals(ScriptableValue<T> other)
         {
-            Invoke(_value);
+            return Equals(this.Value, other.Value);
         }
 
         public static implicit operator T(ScriptableValue<T> value)
@@ -77,17 +82,18 @@ namespace Common.MVVM
             return ScriptableValue.Create(value);
         }
 
-        public bool Equals(ScriptableValue<T> other)
-        {
-            return Equals(this.Value, other.Value);
-        }
-
         public override bool Equals(object obj)
         {
-            return (
-                ReferenceEquals(this, obj) ||
-                (obj is ScriptableValue<T> other && Equals(other))
-            );
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            if (ReferenceEquals(obj, null))
+                return false;
+
+            if (this.GetType() != obj.GetType())
+                return false;
+
+            return Equals((ScriptableValue<T>)obj);
         }
 
         public override int GetHashCode()
